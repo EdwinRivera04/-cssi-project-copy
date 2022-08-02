@@ -4,7 +4,7 @@ async function getData() {
     let response = await fetch(url);
     let data = await response.json();
 
-    let photo = document.querySelector(".container");
+    let photo = document.querySelector(".image");
     photo.innerHTML = `
     <div class="row h-100" id="swiping">
         <div class="col d-flex justify-content-center align-items-center h-100">
@@ -48,11 +48,24 @@ async function generateLikedPage() {
     });
 
     viewButton.addEventListener("click",  () => {
-        location.href='view.html'
-
+        location.href='view.html';
+        let liked = document.querySelector(".liked");
+        liked.innerHTML = `
+        <div>
+            <h1>Your Liked images:</h1>
+        </div>
+        `;
+        let disliked = document.querySelector(".disliked");
+        disliked.innerHTML = `
+        <div>
+            <h1>Your disliked images:</h1>
+        </div>
+        `;
     });
-
 }
 
 
-generateLikedPage()
+generateLikedPage();
+
+
+
