@@ -16,21 +16,49 @@ async function getData() {
             </div>
         </div>
     </div>`;
+
+    return await data;
 }
 
-getData();
 
-let likeButton = document.querySelector("#like")
-let dislikeButton = document.querySelector("#dislike")
+async function generateLikedPage() {
+    let global_data =  await getData();
 
+    let likeButton = document.querySelector("#like")
+    let dislikeButton = document.querySelector("#dislike")
+    let viewButton = document.querySelector("#view");
+
+
+    let liked_img = [];
+    let disliked_img = [];
+
+<<<<<<< HEAD:static/js/script.js
 
 likeButton.addEventListener("click", () =>{
     getData();
+=======
+>>>>>>> e46f8660466f0aeeb8ccf7afca69b29db755566d:script.js
 
-});
+    likeButton.addEventListener("click", async () =>{
+        liked_img.push(global_data);
+        console.log(liked_img)
+        // post a new image to screen
+        await getData();
+    });
 
-dislikeButton.addEventListener("click", () =>{
-    getData();
+    dislikeButton.addEventListener("click", async () =>{
+        disliked_img.push(global_data);
+        console.log(disliked_img)
+        //pot a new image to screen
+        await getData();
+    });
 
-});
+    viewButton.addEventListener("click",  () => {
+        location.href='view.html'
 
+    });
+
+}
+
+
+generateLikedPage()
