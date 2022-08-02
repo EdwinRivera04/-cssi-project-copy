@@ -14,3 +14,7 @@ logInButton.addEventListener("click", () => {
   else
     alert("Wrong Email and/or Password");
 });
+
+registerButton.addEventListener("click", () =>{
+  location.href="register.html";
+});
