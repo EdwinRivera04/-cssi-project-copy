@@ -4,8 +4,8 @@ async function getData() {
     let response = await fetch(url);
     let data = await response.json();
 
-    let container = document.querySelector(".container");
-    container.innerHTML += `
+    let photo = document.querySelector(".container");
+    photo.innerHTML = `
     <div class="row h-100" id="swiping">
         <div class="col d-flex justify-content-center align-items-center h-100">
             <div class="card" style="width: 18rem;">
@@ -19,4 +19,17 @@ async function getData() {
 }
 
 getData();
+
+let likeButton = document.querySelector("#like")
+let dislikeButton = document.querySelector("#dislike")
+
+likeButton.addEventListener("click", () =>{
+    getData();
+
+});
+
+dislikeButton.addEventListener("click", () =>{
+    getData();
+
+});
 
