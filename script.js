@@ -16,20 +16,31 @@ async function getData() {
             </div>
         </div>
     </div>`;
+
+
+    return await data;
 }
 
-getData();
+let global_data =  getData();
 
 let likeButton = document.querySelector("#like")
 let dislikeButton = document.querySelector("#dislike")
 
-likeButton.addEventListener("click", () =>{
-    getData();
+let liked_img = [];
+let disliked_img = [];
 
+
+likeButton.addEventListener("click", () =>{
+    liked_img.push(global_data);
+    console.log(liked_img)
+    // post a new image to screen
+    getData();
 });
 
 dislikeButton.addEventListener("click", () =>{
+    disliked_img.push(global_data);
+    console.log(disliked_img)
+    //pot a new image to screen
     getData();
-
 });
 
