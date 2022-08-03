@@ -117,9 +117,9 @@ def swipe():
             author = data["author"]
             email = session["email"]
             user_data["user"] = email
-            filter = {"liked_count":user_data["liked_count"]}
-            newvalues = { "$set": { "liked_count": user_data["liked_count"] + 1} }
-            matches.update_one(filter,newvalues)
+            filter = { "user": email }
+            newvalues = { "$inc": { "liked_count": 1 } }
+            matches.updateOne(filter, newvalues)
             return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
         elif request.method == 'POST' and request.form.get('dislike') == 'dislike':
             data = callAPI() 
@@ -127,9 +127,9 @@ def swipe():
             author = data["author"]
             email = session["email"]
             user_data["user"] = email
-            filter = {"disliked_count":user_data["disliked_count"]}
-            newvalues = { "$set": { "disliked_count": user_data["disliked_count"] + 1} }
-            matches.update_one(filter,newvalues)
+            # filter = {"disliked_count":user_data["disliked_count"]}
+            # newvalues = { "$set": { "disliked_count": user_data["disliked_count"] + 1} }
+            matches.updateOne({ "user": email },{ "$inc": { "disliked_count": 1 } })
             return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
         else: 
             data = callAPI() 
