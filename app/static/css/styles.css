@@ -434,7 +434,7 @@ figure .shirt-2 {
   transform: skew(10deg) rotate(-15deg);
 }
 
-.btn-group {
+.btn-group button {
   background-color: hsl(var(--fgColorH), var(--fgColorS), var(--fgColorL));; /* Green background */
   border: none;
   color: white; /* White text */
