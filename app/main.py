@@ -28,7 +28,7 @@ liked = 0
 disliked = 0
 
 
-
+ 
 def addData(liked,disliked):
     user_data = {
         "liked_count": liked,
@@ -118,16 +118,30 @@ def logged_in():
     else:
         return redirect(url_for("login"))
 
-@app.route('/index')
+@app.route('/index',methods=['POST','GET'])
 def swipe():
     if "email" in session:
-        data = callAPI() 
-        imgsrc = data["download_url"]
-        author = data["author"]
-        email = session["email"]
-        return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
+        if request.method == 'POST' and request.form.get('like') == 'like':
+            data = callAPI() 
+            imgsrc = data["download_url"]
+            author = data["author"]
+            email = session["email"]
+            return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
+        elif request.method == 'POST' and request.form.get('dislike') == 'dislike':
+            data = callAPI() 
+            imgsrc = data["download_url"]
+            author = data["author"]
+            email = session["email"]
+            return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
+        else: 
+            data = callAPI() 
+            imgsrc = data["download_url"]
+            author = data["author"]
+            email = session["email"]
+            return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
     else:
         return redirect(url_for("login"))
+
 
 @app.route("/logout", methods=["POST", "GET"])
 def logout():
