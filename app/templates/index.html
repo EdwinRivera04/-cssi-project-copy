@@ -23,16 +23,13 @@
         </div>
         </div>  
         <div class="container text-center justify-content-between">
-            <button type="button" id="dislike" class="btn btn-danger">Dislike</button>
-            <button type="button" id="like" class="btn btn-primary">Like</button> 
-           
-
+            <form method="post" action="/index">
+                <input class="btn btn-danger" type="submit" value="dislike" name="dislike"/>
+                <input class="btn btn-success" type="submit" value="like" name="like" />
+            </form>
         </div>
-
         <div class="container text-center justify-content-between">
             <button type="button" class="btn btn-danger"><a href ="logout">Logout</a></button>
-           
-
         </div>
     </body>
 </html>

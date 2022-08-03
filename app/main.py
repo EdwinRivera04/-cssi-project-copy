@@ -23,28 +23,14 @@ db = client.get_database('total_records')
 records=db.register
 matches = db.matches
 
-
-liked = 0
-disliked = 0
-
-
-
-def addData(liked,disliked):
+def addData(user,liked,disliked):
     user_data = {
+        "user": user,
         "liked_count": liked,
         "disliked_count": disliked
     }
 
     matches.insert_one(user_data)
-
-
-def callAPI():
-    url = f"https://picsum.photos/id/{random.randint(0,1084)}/info"
-    response = requests.get(url)
-    data = response.json()
-    return data
-
-
 
 @app.route("/", methods=["POST", "GET"])
 def login():
@@ -118,14 +104,33 @@ def logged_in():
     else:
         return redirect(url_for("login"))
 
-@app.route('/index')
+@app.route('/index',methods=['POST','GET'])
 def swipe():
     if "email" in session:
-        data = callAPI() 
-        imgsrc = data["download_url"]
-        author = data["author"]
-        email = session["email"]
-        return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
+        liked = 0
+        disliked = 0
+        if request.method == 'POST' and request.form.get('like') == 'like':
+            data = callAPI() 
+            liked += 1
+            imgsrc = data["download_url"]
+            author = data["author"]
+            email = session["email"]
+            addData(email,liked,disliked)
+            return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
+        elif request.method == 'POST' and request.form.get('dislike') == 'dislike':
+            disliked += 1
+            data = callAPI() 
+            imgsrc = data["download_url"]
+            author = data["author"]
+            email = session["email"]
+            addData(email,liked,disliked)
+            return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
+        else: 
+            data = callAPI() 
+            imgsrc = data["download_url"]
+            author = data["author"]
+            email = session["email"]
+            return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
     else:
         return redirect(url_for("login"))
 
@@ -139,6 +144,12 @@ def logout():
         return render_template('index.html')
 
 
+@app.route("/api", methods=["POST","GET"])
+def callAPI():
+    url = f"https://picsum.photos/id/{random.randint(0,1084)}/info"
+    response = requests.get(url)
+    data = response.json()
+    return data
 
 
 #end of code to run it
