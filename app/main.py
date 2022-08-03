@@ -1,3 +1,4 @@
+from bson import ObjectId
 import requests
 import email
 import pymongo
@@ -24,27 +25,13 @@ records=db.register
 matches = db.matches
 
 
-liked = 0
-disliked = 0
+user_data = {
+    "user": "",
+    "liked_count": 0,
+    "disliked_count": 0
+}
 
-
- 
-def addData(liked,disliked):
-    user_data = {
-        "liked_count": liked,
-        "disliked_count": disliked
-    }
-
-    matches.insert_one(user_data)
-
-
-def callAPI():
-    url = f"https://picsum.photos/id/{random.randint(0,1084)}/info"
-    response = requests.get(url)
-    data = response.json()
-    return data
-
-
+    
 
 @app.route("/", methods=["POST", "GET"])
 def login():
@@ -101,7 +88,7 @@ def index():
             # return render_template('register.html', message=message)
         else:
             hashed = bcrypt.hashpw(password1.encode('utf-8'), bcrypt.gensalt())
-            user_input = {'email': email, 'password': hashed}
+            user_input = {'email': email, 'password': hashed, 'liked_count': 0, 'disliked_count': 0}
             records.insert_one(user_input)
             
             user_data = records.find_one({"email": email})
@@ -126,12 +113,22 @@ def swipe():
             imgsrc = data["download_url"]
             author = data["author"]
             email = session["email"]
+            email_user = session['email']
+            filter = { "email": email_user }
+            newvalues = { "$inc": { "liked_count": 1 } }
+            records.update_one(filter, newvalues)
+
             return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
         elif request.method == 'POST' and request.form.get('dislike') == 'dislike':
             data = callAPI() 
             imgsrc = data["download_url"]
             author = data["author"]
             email = session["email"]
+            email_user = session['email']
+            filter = { "email": email_user }
+            newvalues = { "$inc": { "disliked_count": 1 } }
+            records.update_one(filter, newvalues)
+            
             return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
         else: 
             data = callAPI() 
@@ -153,6 +150,16 @@ def logout():
         return render_template('index.html')
 
 
+@app.route("/api", methods=["POST","GET"])
+def callAPI():
+    url = f"https://picsum.photos/id/{random.randint(0,1084)}/info"
+    try:
+        response = requests.get(url)
+        data = response.json()
+        return data
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+        
 
 
 #end of code to run it
