@@ -1,3 +1,4 @@
+import requests
 import email
 import pymongo
 import dns 
@@ -5,6 +6,8 @@ from flask import Flask,render_template, request, url_for, redirect, session
 from pymongo.server_api import ServerApi
 import bcrypt
 import os
+import random
+
 
 app=Flask(__name__)
 app.secret_key = 'testj g'
@@ -13,6 +16,16 @@ connstring = "mongodb+srv://eddy:WVIzKi0UqwTw6Dg5@cluster0.uifhgot.mongodb.net/?
 client = pymongo.MongoClient(connstring, server_api=ServerApi('1'))
 db = client.get_database('total_records')
 records=db.register
+
+
+url = f"https://picsum.photos/id/{random.randint(0,1084)}/info"
+
+response = requests.get(url)
+
+data = response.json()
+print(data)
+
+
 
 
 
@@ -91,8 +104,10 @@ def logged_in():
 @app.route('/index')
 def swipe():
     if "email" in session: 
+        imgsrc = data["download_url"]
+        author = data["author"]
         email = session["email"]
-        return render_template('index.html', email=email)
+        return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
     else:
         return redirect(url_for("login"))
 
