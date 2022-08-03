@@ -1,7 +1,6 @@
 import email
 import pymongo
 import dns 
-import pymongo
 from flask import Flask,render_template, request, url_for, redirect, session
 from pymongo.server_api import ServerApi
 import bcrypt

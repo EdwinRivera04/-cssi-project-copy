@@ -10,7 +10,7 @@ async function getData() {
         <div class="col d-flex justify-content-center align-items-center h-100">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <img src="${data.download_url}" class="card-img-top" alt="${data.author}'s image">
+                    <img src="${data.download_url}" id="current_swipe" class="card-img-top" alt="${data.author}">
                     <p class="card-text">${data.author}'s image</p>
                 </div>
             </div>
