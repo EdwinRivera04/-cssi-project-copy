@@ -1,3 +1,4 @@
+from bson import ObjectId
 import requests
 import email
 import pymongo
@@ -23,14 +24,15 @@ db = client.get_database('total_records')
 records=db.register
 matches = db.matches
 
-def addData(user,liked,disliked):
-    user_data = {
-        "user": user,
-        "liked_count": liked,
-        "disliked_count": disliked
-    }
 
-    matches.insert_one(user_data)
+user_data = {
+    "id": ObjectId(email),
+    "user": "",
+    "liked_count": 0,
+    "disliked_count": 0
+}
+
+    
 
 @app.route("/", methods=["POST", "GET"])
 def login():
@@ -107,23 +109,27 @@ def logged_in():
 @app.route('/index',methods=['POST','GET'])
 def swipe():
     if "email" in session:
-        liked = 0
-        disliked = 0
+        user_data["user"] = session["email"]
+        matches.insert_one(user_data)
         if request.method == 'POST' and request.form.get('like') == 'like':
             data = callAPI() 
-            liked += 1
             imgsrc = data["download_url"]
             author = data["author"]
             email = session["email"]
-            addData(email,liked,disliked)
+            user_data["user"] = email
+            filter = {"liked_count":user_data["liked_count"]}
+            newvalues = { "$set": { "liked_count": user_data["liked_count"] + 1} }
+            matches.update_one(filter,newvalues)
             return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
         elif request.method == 'POST' and request.form.get('dislike') == 'dislike':
-            disliked += 1
             data = callAPI() 
             imgsrc = data["download_url"]
             author = data["author"]
             email = session["email"]
-            addData(email,liked,disliked)
+            user_data["user"] = email
+            filter = {"disliked_count":user_data["disliked_count"]}
+            newvalues = { "$set": { "disliked_count": user_data["disliked_count"] + 1} }
+            matches.update_one(filter,newvalues)
             return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
         else: 
             data = callAPI() 
@@ -147,9 +153,13 @@ def logout():
 @app.route("/api", methods=["POST","GET"])
 def callAPI():
     url = f"https://picsum.photos/id/{random.randint(0,1084)}/info"
-    response = requests.get(url)
-    data = response.json()
-    return data
+    try:
+        response = requests.get(url)
+        data = response.json()
+        return data
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+        
 
 
 #end of code to run it
