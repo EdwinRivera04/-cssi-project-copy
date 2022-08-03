@@ -32,12 +32,10 @@ async function generateLikedPage() {
     let liked_img = [];
     let disliked_img = [];
 
-<<<<<<< HEAD:static/js/script.js
 
 likeButton.addEventListener("click", () =>{
     getData();
-=======
->>>>>>> e46f8660466f0aeeb8ccf7afca69b29db755566d:script.js
+
 
     likeButton.addEventListener("click", async () =>{
         liked_img.push(global_data);
@@ -58,7 +56,7 @@ likeButton.addEventListener("click", () =>{
 
     });
 
+})
 }
-
 
 generateLikedPage()

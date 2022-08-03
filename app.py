@@ -1,3 +1,4 @@
+import email
 import pymongo
 import dns 
 import pymongo
@@ -20,7 +21,7 @@ records=db.register
 def login():
     message = 'Please login to your account'
     if "email" in session:
-        return render_template('index.html')
+        return redirect(url_for("logged_in"))
 
     if request.method == "POST":
         email = request.form.get("email")
@@ -34,7 +35,7 @@ def login():
             
             if bcrypt.checkpw(password.encode('utf-8'), passwordcheck):
                 session["email"] = email_val
-                return render_template('logged_in.html',email = email_val)
+                return redirect(url_for("logged_in"))
             else:
                 if "email" in session:
                     return redirect(url_for("index"))
@@ -50,7 +51,7 @@ def login():
 def index():
     message = ''
     if "email" in session:
-        return render_template('logged_in.html',email = email)
+        return redirect(url_for("logged_in"))
     if request.method == "POST":
         #user = request.form.get("fullname")
         email = request.form.get("email")
@@ -77,14 +78,31 @@ def index():
             user_data = records.find_one({"email": email})
             new_email = user_data['email']
    
-            return render_template('logged_in.html', email=new_email)
+            return redirect(url_for("logged_in"))
     return render_template('register.html')
+
+@app.route('/logged_in')
+def logged_in():
+    if "email" in session:
+        email = session["email"]
+        return render_template('logged_in.html', email=email)
+    else:
+        return redirect(url_for("login"))
+
+@app.route('/index')
+def swipe():
+    if "email" in session: 
+        email = session["email"]
+        return render_template('index.html', email=email)
+    else:
+        return redirect(url_for("login"))
 
 @app.route("/logout", methods=["POST", "GET"])
 def logout():
     if "email" in session:
+        email = session["email"]
         session.pop("email", None)
-        return render_template("logout.html")
+        return render_template("logout.html", email=email)
     else:
         return render_template('index.html')
 
