@@ -27,12 +27,24 @@
             <form method="post" action="/index">
                 <input class="btn btn-danger" type="submit" value="dislike" name="dislike"/>
                 <input class="btn btn-success" type="submit" value="like" name="like" />
+                <input class="btn btn-success" type="submit" value="similar" name="similar" />
             </form>
         </div>
     
 
         <div class="container text-center justify-content-between">
-            <button type="button" class="btn btn-danger"><a href ="logout" style="text-decoration: none">Logout</a></button>
+            <button type="button" class="btn btn-danger"><a href ="logout" style="color: white; text-decoration: none">Logout</a></button>
         </div>
+
+
+        <div class="container text-center">
+            <h2>Similar People</h1>
+            </div>       
+    
+        {% for item in similar_array %}
+        <div class="containter text-center">
+        <h3>{{item}}</h3>
+        </div>
+        {% endfor %}
     </body>
 </html>

@@ -1,3 +1,5 @@
+from token import COMMENT
+from xml.etree.ElementTree import Comment
 from bson import ObjectId
 import requests
 import email
@@ -108,6 +110,7 @@ def logged_in():
 @app.route('/index',methods=['POST','GET'])
 def swipe():
     if "email" in session:
+        data = callAPI()
         if request.method == 'POST' and request.form.get('like') == 'like':
             data = callAPI() 
             imgsrc = data["download_url"]
@@ -130,6 +133,21 @@ def swipe():
             records.update_one(filter, newvalues)
             
             return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
+        elif request.method== 'POST' and request.form.get('similar') == 'similar':
+            email = session["email"]
+            user_data = records.find_one({"email": email})
+            num_count = user_data['liked_count']
+            similar_users = records.find( {"liked_count":{"$gt":num_count}},{"email":1,"_id":0})
+           # Iterates through users with number greater than theirs and then adds to array
+            similar_array = []
+            for x in similar_users:
+                for y in x.keys():
+                    similar_array.append(x[y])
+            imgsrc = data["download_url"]
+            author = data["author"]
+            return render_template('index.html', email=email,imgsrc=imgsrc,author=author,similar_array=similar_array)
+
+
         else: 
             data = callAPI() 
             imgsrc = data["download_url"]
