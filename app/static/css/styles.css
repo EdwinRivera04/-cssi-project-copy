@@ -433,3 +433,12 @@ figure .shirt-2 {
   left: 52.5%;
   transform: skew(10deg) rotate(-15deg);
 }
+
+.btn-group {
+  background-color: hsl(var(--fgColorH), var(--fgColorS), var(--fgColorL));; /* Green background */
+  border: none;
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+}
