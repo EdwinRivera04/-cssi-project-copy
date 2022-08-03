@@ -147,7 +147,7 @@ def logout():
         session.pop("email", None)
         return render_template("logout.html", email=email)
     else:
-        return render_template('index.html')
+        return render_template('login.html')
 
 
 @app.route("/api", methods=["POST","GET"])
