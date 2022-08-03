@@ -14,18 +14,35 @@ app.secret_key = 'testj g'
 connstring = "mongodb+srv://eddy:WVIzKi0UqwTw6Dg5@cluster0.uifhgot.mongodb.net/?retryWrites=true&w=majority"
 
 client = pymongo.MongoClient(connstring, server_api=ServerApi('1'))
+
+
+
+
+
 db = client.get_database('total_records')
 records=db.register
+matches = db.matches
 
 
-url = f"https://picsum.photos/id/{random.randint(0,1084)}/info"
-
-response = requests.get(url)
-
-data = response.json()
-print(data)
+liked = 0
+disliked = 0
 
 
+
+def addData(liked,disliked):
+    user_data = {
+        "liked_count": liked,
+        "disliked_count": disliked
+    }
+
+    matches.insert_one(user_data)
+
+
+def callAPI():
+    url = f"https://picsum.photos/id/{random.randint(0,1084)}/info"
+    response = requests.get(url)
+    data = response.json()
+    return data
 
 
 
@@ -80,8 +97,8 @@ def index():
             message = 'This email already exists in database'
             return render_template('register.html', message=message)
         #if password1 != password2:
-            message = 'Passwords should match!'
-            return render_template('register.html', message=message)
+            # message = 'Passwords should match!'
+            # return render_template('register.html', message=message)
         else:
             hashed = bcrypt.hashpw(password1.encode('utf-8'), bcrypt.gensalt())
             user_input = {'email': email, 'password': hashed}
@@ -103,7 +120,8 @@ def logged_in():
 
 @app.route('/index')
 def swipe():
-    if "email" in session: 
+    if "email" in session:
+        data = callAPI() 
         imgsrc = data["download_url"]
         author = data["author"]
         email = session["email"]
