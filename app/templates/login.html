@@ -15,7 +15,7 @@
     <div class="alert alert-secondary" role="alert">
         <p>{{ message }}</p>
     </div>
-{% endif %}
+    {% endif %}
     <div class="form-group">
       <label class="label-email">
       <input id="email" class="text" name="email" placeholder="Email"/>
@@ -23,27 +23,26 @@
       </label>
     </div>
     
-<input input type="checkbox" name="show-password" class="show-password a11y-hidden" id="show-password"/>
-
+    <div>
+      <label class="label-password">
+      <input id=
+        "password" placeholder="Password" type="text" class="text" name="password"/>
+      <span class="required">Password</span>
+      </label>
+    </div>
     
-<label class="label-show-password" for="show-password">
-  <span>Show Password</span>
-</label>
+    <div>    
+      <input input type="checkbox" name="show-password" class="show-password a11y-hidden" id="show-password"/>
+      <label class="label-show-password" for="show-password">
+        <span>Show Password</span>
+      </label>
+    </div>
 
-<div>
-  <label class="label-password">
-  <input id=
-    "password" placeholder="Password" type="text" class="text" name="password"/>
-  <span class="required">Password</span>
-  </label>
-</div>
-
-    
-<div class="btn-group">
-  <button id="lN" type='submit'>Log In</button>  
-  <button id="lN" type='button'><a href = "register" style="color: white; text-decoration: none"> Register</a></button>
-</div>
-    
+    <div class="btn-group">
+      <button id="lN" type='submit'>Log In</button>  
+      <button id="lN" type='button'><a href = "register" style="color: white; text-decoration: none"> Register</a></button>
+    </div>
+      
     <figure aria-hidden="true">
             <div class="person-body"></div>
             <div class="neck skin"></div>

@@ -10,6 +10,9 @@ from pymongo.server_api import ServerApi
 import bcrypt
 import os
 import random
+import regex as re
+
+
 
 
 app=Flask(__name__)
@@ -17,9 +20,6 @@ app.secret_key = 'testj g'
 connstring = "mongodb+srv://eddy:WVIzKi0UqwTw6Dg5@cluster0.uifhgot.mongodb.net/?retryWrites=true&w=majority"
 
 client = pymongo.MongoClient(connstring, server_api=ServerApi('1'))
-
-
-
 
 
 db = client.get_database('total_records')
@@ -33,7 +33,14 @@ user_data = {
     "disliked_count": 0
 }
 
-    
+regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'  
+  
+def checkEmail(email):   
+    if(re.search(regex,email)):   
+        return True
+    return False
+
+
 
 @app.route("/", methods=["POST", "GET"])
 def login():
@@ -138,13 +145,15 @@ def swipe():
             user_data = records.find_one({"email": email})
             num_count = user_data['liked_count']
             similar_users = records.find( {"liked_count":{"$gt":num_count}},{"email":1,"_id":0})
-           # Iterates through users with number greater than theirs and then adds to array
+            # Iterates through users with number greater than theirs and then adds to array
+
             similar_array = []
             for x in similar_users:
                 for y in x.keys():
                     similar_array.append(x[y])
             imgsrc = data["download_url"]
             author = data["author"]
+            
             return render_template('index.html', email=email,imgsrc=imgsrc,author=author,similar_array=similar_array)
 
 
