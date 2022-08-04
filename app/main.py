@@ -1,6 +1,3 @@
-from token import COMMENT
-from xml.etree.ElementTree import Comment
-from bson import ObjectId
 import requests
 import email
 import pymongo
