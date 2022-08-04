@@ -36,15 +36,23 @@
             <button type="button" class="btn btn-danger"><a href ="logout" style="color: white; text-decoration: none">Logout</a></button>
         </div>
 
-
+  
+        
+        {% if similar_array %}
         <div class="container text-center">
             <h2>Similar People</h1>
-            </div>       
-    
-        {% for item in similar_array %}
-        <div class="containter text-center">
-        <h3>{{item}}</h3>
         </div>
-        {% endfor %}
+        <div class="col d-flex justify-content-center">
+            
+            <div class="card text-center" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                    {% for item in similar_array %}
+                    <li class="list-group-item">{{item}}</li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+        {% endif %}
     </body>
 </html>

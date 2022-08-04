@@ -144,9 +144,8 @@ def swipe():
             email = session["email"]
             user_data = records.find_one({"email": email})
             num_count = user_data['liked_count']
-            similar_users = records.find( {"liked_count":{"$gt":num_count}},{"email":1,"_id":0})
-            # Iterates through users with number greater than theirs and then adds to array
-
+            similar_users = records.find( {"liked_count":{"$gt": num_count-2, "$lt": num_count+2}},{"email":1,"_id":0})
+           # Iterates through users with number greater than theirs and then adds to array
             similar_array = []
             for x in similar_users:
                 for y in x.keys():
@@ -172,9 +171,9 @@ def logout():
     if "email" in session:
         email = session["email"]
         session.pop("email", None)
-        return render_template("logout.html", email=email)
+        return redirect(url_for("login"))
     else:
-        return render_template('login.html')
+        return redirect(url_for("login"))
 
 
 @app.route("/api", methods=["POST","GET"])
