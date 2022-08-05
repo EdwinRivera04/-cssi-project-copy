@@ -124,25 +124,19 @@ def swipe():
         if request.method == 'POST':
             if request.form.get('like') == 'like':
                 data = callAPI() 
-                email_user = session['email']
-                filter = { "email": email_user }
+                filter = { "email": email }
                 newvalues = { "$inc": { "liked_count": 1 } }
                 records.update_one(filter, newvalues)
 
                 return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
             if request.form.get('dislike') == 'dislike':
                 data = callAPI() 
-                imgsrc = data["download_url"]
-                author = data["author"]
-                email = session["email"]
-                email_user = session['email']
-                filter = { "email": email_user }
+                filter = { "email": email }
                 newvalues = { "$inc": { "disliked_count": 1 } }
                 records.update_one(filter, newvalues)
             
                 return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
             if  request.form.get('similar') == 'similar':
-                email = session["email"]
                 user_data = records.find_one({"email": email})
                 num_count = user_data['liked_count']
                 similar_users = records.find( {"liked_count":{"$gt": num_count-2, "$lt": num_count+2}},{"email":1,"_id":0})
