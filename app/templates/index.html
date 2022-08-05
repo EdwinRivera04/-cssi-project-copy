@@ -6,7 +6,6 @@
         <link href="../static/css/styles_index.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <link rel="shortcut icon" href="../images/fav_icon.png" type="image/x-icon">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
         <!-- <script defer src="../static/js/script.js"></script>  -->
@@ -16,7 +15,6 @@
         <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
     </head>
         <body>
-            <div id="particles-js"></div>
             <section class="hero is-fullheight is-default is-bold">
                 <div class="hero-head">
                     <nav class="navbar">
@@ -34,11 +32,8 @@
                                 <div class="navbar-end">
                                     <div class="tabs is-right">
                                         <ul>
-                                            <li class="is-active"><a>Home</a></li>
-                                            <li><a href="">Examples</a></li>
-                                            <li><a href="">Features</a></li>
-                                            <li><a href="">Team</a></li>
-                                            <li><a href="">Help</a></li>
+                                            <li class="is-active"><a href="{{url_for('swipe')}}">swipe</a></li>
+                                            <li><a href="{{url_for('logout')}}">logout</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -82,16 +77,15 @@
         
                 <div class="hero-foot">
                     <div class="container">
-                        <div class="tabs is-centered">
+                        <div class="tabs is-centered has-text-centered">
                             <ul>
-                                <li><a>And this is the bottom</a></li>
+                                <li>Made with <span style="color: #e25555;">&#9829;</span> by eddy, abrar, and edwin.</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
         
-            <script src="../js/bulma.js"></script>
               {% if similar_array %}
                 <div class="text-center">
                     <h2>Similar People</h1>
@@ -109,114 +103,5 @@
                 </div>
                 {% endif %}
         
-                <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-                <script>
-                    // ParticlesJS Config.
-                    particlesJS("particles-js", {
-                    "particles": {
-                        "number": {
-                        "value": 80,
-                        "density": {
-                            "enable": true,
-                            "value_area": 700
-                        }
-                        },
-                        "color": {
-                        "value": "#ffffff"
-                        },
-                        "shape": {
-                        "type": "circle",
-                        "stroke": {
-                            "width": 0,
-                            "color": "#000000"
-                        },
-                        "polygon": {
-                            "nb_sides": 5
-                        },
-                        },
-                        "opacity": {
-                        "value": 0.5,
-                        "random": false,
-                        "anim": {
-                            "enable": false,
-                            "speed": 0.1,
-                            "opacity_min": 0.1,
-                            "sync": false
-                        }
-                        },
-                        "size": {
-                        "value": 3,
-                        "random": true,
-                        "anim": {
-                            "enable": false,
-                            "speed": 10,
-                            "size_min": 0.1,
-                            "sync": false
-                        }
-                        },
-                        "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#ffffff",
-                        "opacity": 0.4,
-                        "width": 1
-                        },
-                        "move": {
-                        "enable": true,
-                        "speed": 2,
-                        "direction": "none",
-                        "random": false,
-                        "straight": false,
-                        "out_mode": "out",
-                        "bounce": false,
-                        "attract": {
-                            "enable": false,
-                            "rotateX": 600,
-                            "rotateY": 1200
-                        }
-                        }
-                    },
-                    "interactivity": {
-                        "detect_on": "canvas",
-                        "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "grab"
-                        },
-                        "onclick": {
-                            "enable": true,
-                            "mode": "push"
-                        },
-                        "resize": true
-                        },
-                        "modes": {
-                        "grab": {
-                            "distance": 140,
-                            "line_linked": {
-                            "opacity": 1
-                            }
-                        },
-                        "bubble": {
-                            "distance": 400,
-                            "size": 40,
-                            "duration": 2,
-                            "opacity": 8,
-                            "speed": 3
-                        },
-                        "repulse": {
-                            "distance": 200,
-                            "duration": 0.4
-                        },
-                        "push": {
-                            "particles_nb": 4
-                        },
-                        "remove": {
-                            "particles_nb": 2
-                        }
-                        }
-                    },
-                    "retina_detect": true
-                    });
-                </script>
         </body>
 </html>

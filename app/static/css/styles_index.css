@@ -2,12 +2,27 @@ canvas {
   display: block;
 }
 
-#particles-js {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #00356B;
-    z-index: -1;
+
+.hero-body{
+  position: relative;
+}
+
+.hero{
+  position: relative;
+}
+
+#tsparticles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#particles-js canvas{
+  position: absolute;
+  height: 100vh;
+  z-index: -1;
 }
 
 .container {
