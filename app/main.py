@@ -118,50 +118,48 @@ def logged_in():
 def swipe():
     if "email" in session:
         data = callAPI()
-        if request.method == 'POST' and request.form.get('like') == 'like':
-            data = callAPI() 
-            imgsrc = data["download_url"]
-            author = data["author"]
-            email = session["email"]
-            email_user = session['email']
-            filter = { "email": email_user }
-            newvalues = { "$inc": { "liked_count": 1 } }
-            records.update_one(filter, newvalues)
+        imgsrc = data["download_url"]
+        author = data["author"]
+        email = session["email"]
+        if request.method == 'POST':
+            if request.form.get('like') == 'like':
+                data = callAPI() 
+                email_user = session['email']
+                filter = { "email": email_user }
+                newvalues = { "$inc": { "liked_count": 1 } }
+                records.update_one(filter, newvalues)
 
-            return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
-        elif request.method == 'POST' and request.form.get('dislike') == 'dislike':
-            data = callAPI() 
-            imgsrc = data["download_url"]
-            author = data["author"]
-            email = session["email"]
-            email_user = session['email']
-            filter = { "email": email_user }
-            newvalues = { "$inc": { "disliked_count": 1 } }
-            records.update_one(filter, newvalues)
+                return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
+            if request.form.get('dislike') == 'dislike':
+                data = callAPI() 
+                imgsrc = data["download_url"]
+                author = data["author"]
+                email = session["email"]
+                email_user = session['email']
+                filter = { "email": email_user }
+                newvalues = { "$inc": { "disliked_count": 1 } }
+                records.update_one(filter, newvalues)
             
-            return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
-        elif request.method== 'POST' and request.form.get('similar') == 'similar':
-            email = session["email"]
-            user_data = records.find_one({"email": email})
-            num_count = user_data['liked_count']
-            similar_users = records.find( {"liked_count":{"$gt": num_count-2, "$lt": num_count+2}},{"email":1,"_id":0})
-           # Iterates through users with number greater than theirs and then adds to array
-            similar_array = []
-            for x in similar_users:
-                for y in x.keys():
-                    if email != x[y]: 
-                        similar_array.append(x[y])
-            imgsrc = data["download_url"]
-            author = data["author"]
-            
-            return render_template('index.html', email=email,imgsrc=imgsrc,author=author,similar_array=similar_array)
+                return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
+            if  request.form.get('similar') == 'similar':
+                email = session["email"]
+                user_data = records.find_one({"email": email})
+                num_count = user_data['liked_count']
+                similar_users = records.find( {"liked_count":{"$gt": num_count-2, "$lt": num_count+2}},{"email":1,"_id":0})
+            # Iterates through users with number greater than theirs and then adds to array
+                similar_array = []
+                for x in similar_users:
+                    for y in x.keys():
+                        if email != x[y]: 
+                            similar_array.append(x[y])
+                imgsrc = data["download_url"]
+                author = data["author"]
+                
+                return render_template('index.html', email=email,imgsrc=imgsrc,author=author,similar_array=similar_array)
 
 
         else: 
             data = callAPI() 
-            imgsrc = data["download_url"]
-            author = data["author"]
-            email = session["email"]
             return render_template('index.html', email=email,imgsrc=imgsrc,author=author)
     else:
         return redirect(url_for("login"))
