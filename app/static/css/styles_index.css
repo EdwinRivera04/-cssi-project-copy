@@ -1,0 +1,145 @@
+canvas {
+  display: block;
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #00356B;
+    z-index: -1;
+}
+
+.container {
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .bar1, .bar2, .bar3 {
+    width: 30px;
+    height: 4px;
+    background-color: #000000;
+    margin: 6px 0;
+    transition: 0.4s;
+  }
+  
+  .change .bar1 {
+    -webkit-transform: rotate(-405deg) translate(-9px, 6px);
+    transform: rotate(-405deg) translate(-8px, 6px);
+  }
+  
+  .change .bar2 {opacity: 0;}
+  
+  .change .bar3 {
+    -webkit-transform: rotate(405deg) translate(-8px, -8px);
+    transform: rotate(405deg) translate(-7px, -8px);
+  }
+  
+  
+  
+  #menu{
+      font-family:"Helvetica";
+      background:#DDD;
+      width:230px;
+      height:100%;
+      display:block;
+      position:fixed;
+      left:-230px;
+      top:0px;
+      transition:left 0.3s linear;
+      border-right:1px solid #808080;
+      border-bottom:1px solid ;
+  }
+  
+  #menu.visible{
+      left:0px;
+      transition:left 0.3s linear;
+  }
+  
+  
+  
+  /*set style for buttons*/
+  .button {
+    border-radius:1px;
+    display:block;
+    background-color:#ddd;
+    border:none;
+    color:black;
+    text-align:center;
+    font-size:18px;
+    padding:15px;
+    width:200px;
+    transition:all 0.5s;
+    cursor:pointer;
+    margin:0px;
+  }
+  
+  .button span {
+    cursor:pointer;
+    display:inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .button span:after {
+    content:'\00bb';
+    position:absolute;
+    opacity:0;
+    top:0;
+    right:-20px;
+    transition:0.5s;
+  }
+  
+  .button:hover span {
+    padding-right:25px;
+  }
+  
+  .button:hover span:after {
+    opacity:1;
+    right:0;
+    transition:0.5s;
+    color:white;
+  }
+  
+  .button:hover {
+    background-color:#808080;
+    color:white;
+    transition:0s;
+  }
+
+
+
+/* html, body {
+    width: 100%;
+    height: 100%;
+} */
+
+.text {
+	position: absolute;
+	top: 50%;
+	right: 50%;
+	transform: translate(50%,-50%);
+	color:#fff;
+	max-width: 90%;
+	padding: 2em 3em;
+	background: rgba(0, 0, 0, 0.4);
+	text-shadow: 0px 0px 2px #131415;
+	font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+	font-size: 2.25em;
+	font-weight: 700;
+	letter-spacing: -1px;
+}
+
+a,
+a:visited {
+	color: #e34234;
+	transition: 0.25s;
+}
+
+a:hover,
+a:focus {
+	color: #ba160c;
+}
