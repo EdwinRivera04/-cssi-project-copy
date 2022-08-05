@@ -9,6 +9,25 @@
         <!-- <script defer src="../static/js/match.js"></script>  -->
     </head>
     <body>
+        <div class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom animate__animated animate__fadeInDown">
+            <div class="container">
+                <a href="#" class="navbar-brand">find a friend!</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse justify-content-end mx-auto" id="navbarResponsive">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('swipe')}}">home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('logout')}}">logout</a>
+                        </li>
+                    </ul>
+                  </div>
+            </div>
+        </div>
+
         <div class="container image">
             <div class="row h-100" id="swiping">
                 <div class="col d-flex justify-content-center align-items-center h-100">
@@ -26,15 +45,11 @@
         <div class="container text-center justify-content-between">
             <form method="post" action="/index">
                 <input class="btn btn-danger" type="submit" value="dislike" name="dislike"/>
-                <input class="btn btn-success" type="submit" value="like" name="like" />
+                <input class="btn btn-primary" type="submit" value="like" name="like" />
                 <input class="btn btn-success" type="submit" value="similar" name="similar" />
             </form>
         </div>
     
-
-        <div class="container text-center justify-content-between">
-            <button type="button" class="btn btn-danger"><a href ="logout" style="color: white; text-decoration: none">Logout</a></button>
-        </div>
 
   
         

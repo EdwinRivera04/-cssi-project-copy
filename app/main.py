@@ -77,7 +77,6 @@ def index():
     if request.method == "POST":
         #user = request.form.get("fullname")
         email = request.form.get("email")
-        
         password1 = request.form.get("password")
         # password2 = request.form.get("password2")
         
@@ -92,15 +91,19 @@ def index():
         #if password1 != password2:
             # message = 'Passwords should match!'
             # return render_template('register.html', message=message)
-        else:
+        elif checkEmail(email):
             hashed = bcrypt.hashpw(password1.encode('utf-8'), bcrypt.gensalt())
             user_input = {'email': email, 'password': hashed, 'liked_count': 0, 'disliked_count': 0}
             records.insert_one(user_input)
             
             user_data = records.find_one({"email": email})
             new_email = user_data['email']
-   
             return redirect(url_for("logged_in"))
+        else:
+            message = 'Use an actual email.'
+            return render_template('register.html', message=message) 
+   
+
     return render_template('register.html')
 
 @app.route('/logged_in')
@@ -146,7 +149,8 @@ def swipe():
             similar_array = []
             for x in similar_users:
                 for y in x.keys():
-                    similar_array.append(x[y])
+                    if email != x[y]: 
+                        similar_array.append(x[y])
             imgsrc = data["download_url"]
             author = data["author"]
             
