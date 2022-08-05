@@ -179,7 +179,7 @@ def logout():
 def callAPI():
     url = f"https://picsum.photos/id/{random.randint(0,1084)}/info"
     try:
-        response = requests.get(url)
+        response = requests.get(url,timeout=25)
         data = response.json()
         return data
     except requests.exceptions.RequestException as e:
